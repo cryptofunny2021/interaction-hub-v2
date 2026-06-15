@@ -1,42 +1,43 @@
-# v2.1 - Fixed Token Minting
+# v2.5 Final Complete Version
 # { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }
 
 from genlayer import *
 
 class InteractionHub(gl.Contract):
     interactions: TreeMap[Address, u256]
-    
-    reputation_address: Address
-    token_address: Address
+    scores: TreeMap[Address, u256]        # Reputation
+    balances: TreeMap[Address, u256]      # Token
 
     def __init__(self):
-        self.reputation_address = Address("0x77f86b0D8A0230BD612F41F9c638d682f6aBc476")
-        self.token_address = Address("0x698c060E742D37E4742aEf4d790ba1543325C15b")
+        pass
 
     @gl.public.write
     def record_interaction(self) -> None:
         user = gl.message.sender_address
 
         # Record interaction
-        current = self.interactions.get(user, u256(0))
-        self.interactions[user] = current + u256(1)
+        current_int = self.interactions.get(user, u256(0))
+        self.interactions[user] = current_int + u256(1)
 
-        # Reward Reputation
-        try:
-            rep = gl.contract(self.reputation_address)
-            rep.record_action(u256(10))
-        except:
-            pass
+        # Increase Reputation
+        current_score = self.scores.get(user, u256(0))
+        self.scores[user] = current_score + u256(10)
 
-        # Reward Token - More reliable way
-        try:
-            token = gl.contract(self.token_address)
-            token.mint(u256(5))
-        except:
-            # Fallback: try direct mint if contract call fails
-            pass
+        # Mint Token
+        current_balance = self.balances.get(user, u256(0))
+        self.balances[user] = current_balance + u256(5)
 
     @gl.public.view
     def my_interactions(self) -> u256:
         user = gl.message.sender_address
         return self.interactions.get(user, u256(0))
+
+    @gl.public.view
+    def my_score(self) -> u256:
+        user = gl.message.sender_address
+        return self.scores.get(user, u256(0))
+
+    @gl.public.view
+    def my_balance(self) -> u256:
+        user = gl.message.sender_address
+        return self.balances.get(user, u256(0))
