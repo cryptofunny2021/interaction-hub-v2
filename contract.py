@@ -1,5 +1,5 @@
-# Interaction Hub v2.0
-# Central Connected Hub for SocialFi Ecosystem
+# v2.0
+# { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }
 
 from genlayer import *
 
@@ -9,13 +9,13 @@ class InteractionHub(gl.Contract):
     reputation_address: Address
     token_address: Address
 
-    def __init__(self, reputation_addr: Address, token_addr: Address):
-        self.reputation_address = reputation_addr
-        self.token_address = token_addr
+    def __init__(self):
+        # Hardcoded addresses for v2
+        self.reputation_address = Address("0x77f86b0D8A0230BD612F41F9c638d682f6aBc476")
+        self.token_address = Address("0x698c060E742D37E4742aEf4d790ba1543325C15b")
 
     @gl.public.write
     def record_interaction(self) -> None:
-        """Record interaction and automatically distribute rewards"""
         user = gl.message.sender_address
 
         # Record interaction
@@ -38,5 +38,5 @@ class InteractionHub(gl.Contract):
 
     @gl.public.view
     def my_interactions(self) -> u256:
-        """Get my interaction count"""
-        return self.interactions.get(gl.message.sender_address, u256(0))
+        user = gl.message.sender_address
+        return self.interactions.get(user, u256(0))
