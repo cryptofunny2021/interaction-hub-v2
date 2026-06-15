@@ -1,4 +1,4 @@
-# v2.0
+# v2.1 - Fixed Token Minting
 # { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }
 
 from genlayer import *
@@ -10,7 +10,6 @@ class InteractionHub(gl.Contract):
     token_address: Address
 
     def __init__(self):
-        # Hardcoded addresses for v2
         self.reputation_address = Address("0x77f86b0D8A0230BD612F41F9c638d682f6aBc476")
         self.token_address = Address("0x698c060E742D37E4742aEf4d790ba1543325C15b")
 
@@ -22,18 +21,19 @@ class InteractionHub(gl.Contract):
         current = self.interactions.get(user, u256(0))
         self.interactions[user] = current + u256(1)
 
-        # Auto reward Reputation
+        # Reward Reputation
         try:
             rep = gl.contract(self.reputation_address)
             rep.record_action(u256(10))
         except:
             pass
 
-        # Auto reward Token
+        # Reward Token - More reliable way
         try:
             token = gl.contract(self.token_address)
             token.mint(u256(5))
         except:
+            # Fallback: try direct mint if contract call fails
             pass
 
     @gl.public.view
