@@ -2,9 +2,10 @@
 
 **Central Hub for GenLayer SocialFi Ecosystem v2.0**
 
-Contract Address: (Will be added after deployment)
+**Contract Address:**  
+`0xbcC9Dbc141b1f3562237380c2f18700e36abAca6`
 
 ## Features
 - Records user interactions
 - Automatically triggers Reputation and Token rewards
-- Core connector between all contracts
+- Main connector of the ecosystem
