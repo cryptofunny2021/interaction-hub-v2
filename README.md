@@ -1,17 +1,31 @@
-# Interaction Hub v2
+# Interaction Hub v2.5
 
-**Central Hub for GenLayer SocialFi Ecosystem v2.0**
+**Core Interaction & Reward Hub for GenLayer SocialFi Ecosystem**
 
 **Contract Address:**  
-`0x587E1c83193E20E9ce8fB1b30d6d6C2024711992`
+`0x88886715F461A38dd59400B9c256eDE3b4C6fD85`
 
 ## Built By
 [@cryptofunny724](https://x.com/cryptofunny724)
 
-## Features
-- Records user interactions
-- Automatically distributes Reputation and Token rewards
-- Connects all contracts in the ecosystem
+## Overview
+Central contract of the ecosystem. Handles user interactions and automatically distributes Reputation points and Dynamic Tokens.
 
-## How to Use
-Call `record_interaction()` to earn rewards automatically.
+## Features
+- Tracks user interactions
+- Automatic Reputation scoring (+10 per interaction)
+- Automatic Token minting (+5 per interaction)
+- Internal state management for scores and balances
+- Stable and optimized implementation
+
+## Public Methods
+- `record_interaction()` — Main entry point
+- `my_interactions()` — View interaction count
+- `my_score()` — View reputation score
+- `my_balance()` — View token balance
+
+## Status
+Fully functional on GenLayer Bradbury Testnet.
+
+---
+**GenLayer Builders Program Contribution**
